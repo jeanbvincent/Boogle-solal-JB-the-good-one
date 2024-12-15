@@ -1,4 +1,5 @@
-﻿using System;
+using Boggle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,9 @@ namespace Projet_Boogle_Solal_JB
             this.lettres = lettres;
         }
 
-        public string Nom 
+        public string Nom
         {
-        get { return nom; }
+            get { return nom; }
             set { nom = value; }
         }
 
@@ -36,12 +37,12 @@ namespace Projet_Boogle_Solal_JB
         public List<string> MotsTrouves
         {
             get { return motsTrouves; }
-           set { motsTrouves = value; }
+            set { motsTrouves = value; }
         }
 
         public bool Contain(string mot)
-        { 
-        bool rps = false;
+        {
+            bool rps = false;
 
             for (int i = 0; i < motsTrouves.Count; i++)
             {
@@ -50,29 +51,37 @@ namespace Projet_Boogle_Solal_JB
                     rps = true;
                 }
             }
-        return rps; 
+            return rps;
         }
 
         public void Add_Mot(string mot)
         {
+            // Vérifie si le mot est déjà dans la liste
+            if (Contain(mot))
+            {
+                Console.WriteLine($"Erreur : Le mot \"{mot}\" a déjà été trouvé par {nom}.");
+                return; // Arrête l'exécution si le mot est déjà trouvé
+            }
 
-            motsTrouves[motsTrouves.Count] = mot; //on ajoute le nouveau mot a la liste 
-            
-            int points = 0;            //on veut compter les points gagnés par le mot formé et les ajouter aux points totales du joueur 
-            mot = mot.ToUpper();       //necessité de convertir le mot en majusules pour comparé chaque charactere du mot avec les lettres de notre classe lettre 
+            // Ajoute le nouveau mot à la liste
+            motsTrouves.Add(mot);
+
+            int points = 0; // Compteur pour les points gagnés
+            mot = mot.ToUpper(); // Convertir le mot en majuscules pour la comparaison
             for (int i = 0; i < mot.Length; i++)
             {
-                for (int j = 0; j < lettres.Count; j++)  //on cherche savoir quelle lettre est le caractere mot[i]
+                for (int j = 0; j < lettres.Count; j++) // Chercher les points pour chaque lettre du mot
                 {
                     if (mot[i] == lettres[j].Caractere)
-                    { 
-                    points = points+ lettres[j].Points;  //on ajoute les point équivalent du caractere mot[i]
+                    {
+                        points += lettres[j].Points; // Ajoute les points correspondants
                     }
                 }
-
             }
-            score = score+points;  //on ajoute les points au score du joueur
+
+            score += points; // Ajoute les points au score du joueur
         }
+
 
         public string toString()
         {
@@ -81,7 +90,7 @@ namespace Projet_Boogle_Solal_JB
 
             for (int i = 0; i < motsTrouves.Count; i++)
             {
-                description = description + motsTrouves[i]+ "\n";
+                description = description + motsTrouves[i] + "\n";
             }
             return description;
         }
