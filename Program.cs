@@ -1,10 +1,12 @@
-﻿namespace Projet_Boogle_Solal_JB
+using Boggle;
+
+namespace Projet_Boogle_Solal_JB
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\Users\\jeanb\\Downloads\\Lettres.txt";
+            string filePath = "C:\\Users\\solal\\Downloads\\Lettres.txt";
             List<Lettre> lettres = new List<Lettre>(); //creation d'un liste avec les lettre utilises
 
             //on utilisera pas de try{} catch{} puisque on connait deja le fichier "lettres"
@@ -33,7 +35,7 @@
             }
             Console.WriteLine();
 
-         
+
             string langue = "";
             langue = langue.ToUpper();
             while (langue != "fr" && langue != "en" && langue != "FR" && langue != "EN") //on demande a l'utilisateur de chosir de jouer en francais ou anglais
@@ -42,41 +44,41 @@
                 langue = Console.ReadLine();
             }
             Dictionnaire dictionnaire = new Dictionnaire(langue);  //creation dictionnaire
-                                                            
+
             Console.WriteLine("Nom du premier joueur :"); //Création des deux joueurs
-            Joueur joueur1 = new Joueur(Console.ReadLine(),lettres);
+            Joueur joueur1 = new Joueur(Console.ReadLine(), lettres);
             Console.WriteLine("Nom du deuxieme joueur");
-            Joueur joueur2 = new Joueur(Console.ReadLine(),lettres);
+            Joueur joueur2 = new Joueur(Console.ReadLine(), lettres);
 
 
-            Console.WriteLine("Tour de "+joueur1.Nom);
+            Console.WriteLine("Tour de " + joueur1.Nom);
             Plateau plateau = new Plateau(lettres);  //creation tableau
             Console.WriteLine(plateau.toString());
- 
+
             DateTime debut = DateTime.Now;   //on initialise le temporisateur a l'heure actuelle 
             TimeSpan dureeLimite = TimeSpan.FromMinutes(20);   //on choisi notre limite de temps
-            
+
             while (DateTime.Now - debut < dureeLimite)   //le joueur peu essayer des mots tant que la différence entre le temps du début et le temps actuel est plus petite que la durée du tour
             {
                 Console.WriteLine("Tapez un mot");
-                string essaie=  Console.ReadLine();
+                string essaie = Console.ReadLine();
                 essaie = essaie.ToUpper();
 
                 if (plateau.Test_Plateau(essaie) == true)  //on verifie que le mot est dans le tableau 
                 {
-                    if (dictionnaire.RechDichoRecursif(essaie,0,essaie.Length) == true)  //on vérifie que le mot appartient au dictionnaire 
+                    if (dictionnaire.RechDichoRecursif(essaie, 0, dictionnaire.Mots.Count) == true)  //on vérifie que le mot appartient au dictionnaire 
                     {
                         joueur1.Add_Mot(essaie);   //On ajoute le mot a la liste des mots trouve qui va compter egalement les points obtenue 
 
                     }
-                    else 
+                    else
                     {
                         Console.WriteLine("Le mot n'appartient pas au dictionnaire!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Le mot n'appartient pas au tableau!");      
+                    Console.WriteLine("Le mot n'appartient pas au tableau!");
                 }
                 if (DateTime.Now - debut >= dureeLimite)
                 {
