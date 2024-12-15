@@ -30,7 +30,7 @@ namespace Projet_Boogle_Solal_JB
 
         public int Score
         {
-            get { return Score; }
+            get { return score; }
             set { score = value; }
         }
 
