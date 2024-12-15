@@ -1,4 +1,5 @@
-using Boggle;
+using System;
+using System.Collections.Generic;
 
 namespace Projet_Boogle_Solal_JB
 {
@@ -52,24 +53,25 @@ namespace Projet_Boogle_Solal_JB
 
 
             Console.WriteLine("Tour de " + joueur1.Nom);
-            Plateau plateau = new Plateau(lettres);  //creation tableau
+            Plateau plateau = new Plateau(lettres); // création du plateau
             Console.WriteLine(plateau.toString());
 
-            DateTime debut = DateTime.Now;   //on initialise le temporisateur a l'heure actuelle 
-            TimeSpan dureeLimite = TimeSpan.FromMinutes(20);   //on choisi notre limite de temps
+            TimeSpan dureeLimite = TimeSpan.FromMinutes(1); // Limite de temps pour chaque joueur
+            DateTime debut;
 
-            while (DateTime.Now - debut < dureeLimite)   //le joueur peu essayer des mots tant que la différence entre le temps du début et le temps actuel est plus petite que la durée du tour
+            // Tour du joueur 1
+            debut = DateTime.Now;
+            while (DateTime.Now - debut < dureeLimite)
             {
                 Console.WriteLine("Tapez un mot");
                 string essaie = Console.ReadLine();
                 essaie = essaie.ToUpper();
 
-                if (plateau.Test_Plateau(essaie) == true)  //on verifie que le mot est dans le tableau 
+                if (plateau.Test_Plateau(essaie)) // vérifie que le mot est dans le plateau
                 {
-                    if (dictionnaire.RechDichoRecursif(essaie, 0, dictionnaire.Mots.Count) == true)  //on vérifie que le mot appartient au dictionnaire 
+                    if (dictionnaire.RechDichoRecursif(essaie, 0, dictionnaire.Mots.Count)) // vérifie que le mot est dans le dictionnaire
                     {
-                        joueur1.Add_Mot(essaie);   //On ajoute le mot a la liste des mots trouve qui va compter egalement les points obtenue 
-
+                        joueur1.Add_Mot(essaie); // ajoute le mot et calcule les points
                     }
                     else
                     {
@@ -78,81 +80,78 @@ namespace Projet_Boogle_Solal_JB
                 }
                 else
                 {
-                    Console.WriteLine("Le mot n'appartient pas au tableau!");
+                    Console.WriteLine("Le mot n'appartient pas au plateau!");
                 }
+
                 if (DateTime.Now - debut >= dureeLimite)
                 {
-                    Console.WriteLine("Temps écoulé!!");
+                    Console.WriteLine("Temps écoulé pour " + joueur1.Nom + "!");
                     break;
                 }
             }
 
-            plateau.Lance();
+            // Tour du joueur 2
+            plateau.Lance(); // Lancer un nouveau plateau
             Console.WriteLine("Tour de " + joueur2.Nom);
             Console.WriteLine(plateau.toString());
 
+            debut = DateTime.Now;
+            while (DateTime.Now - debut < dureeLimite)
+            {
+                Console.WriteLine("Tapez un mot");
+                string essaie = Console.ReadLine();
+                essaie = essaie.ToUpper();
 
+                if (plateau.Test_Plateau(essaie)) // vérifie que le mot est dans le plateau
+                {
+                    if (dictionnaire.RechDichoRecursif(essaie, 0, dictionnaire.Mots.Count)) // vérifie que le mot est dans le dictionnaire
+                    {
+                        joueur2.Add_Mot(essaie); // ajoute le mot et calcule les points
+                    }
+                    else
+                    {
+                        Console.WriteLine("Le mot n'appartient pas au dictionnaire!");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Le mot n'appartient pas au plateau!");
+                }
 
-            //   for (int i = 0; i<4;i++)
-            //   {
-            //      for (int j = 0; j<4;j++)
-            //      { 
-            //       Console.Write("dé" +i+","+j+" : ");
-            //       for (int h = 0; h < 6; h++)
-            //       {
-            //           Console.Write(plateau.Des[i, j].Lettres[h].Caractere);
-            //       }
-            //       Console.WriteLine() ;
-            //      
-            //      } 
-            //    }
+                if (DateTime.Now - debut >= dureeLimite)
+                {
+                    Console.WriteLine("Temps écoulé pour " + joueur2.Nom + "!");
+                    break;
+                }
+            }
 
-            // foreach (Lettre lettre in lettres)
-            // {
-            //     Console.Write(lettre.Caractere + " ");
-            //     Console.Write(lettre.Points + " ");
-            //     Console.WriteLine(lettre.Occurence);
-            //
-            // }
-            // Console.WriteLine();
+            // Fin de la partie : afficher les scores et déterminer le gagnant
+            Console.WriteLine("\n--- Résultats finaux ---");
 
+            // Récapitulatif du joueur 1
+            Console.WriteLine(joueur1.toString());
 
+            // Récapitulatif du joueur 2
+            Console.WriteLine(joueur2.toString());
 
+            // Annonce du gagnant
+            if (joueur1.Score > joueur2.Score)
+            {
+                Console.WriteLine($"Félicitations {joueur1.Nom}, vous êtes le gagnant avec {joueur1.Score} points !");
+            }
+            else if (joueur1.Score < joueur2.Score)
+            {
+                Console.WriteLine($"Félicitations {joueur2.Nom}, vous êtes le gagnant avec {joueur2.Score} points !");
+            }
+            else
+            {
+                Console.WriteLine($"Égalité parfaite entre {joueur1.Nom} et {joueur2.Nom} avec {joueur1.Score} points chacun !");
+            }
 
-
-
-            // Console.WriteLine("mot");
-            // string mot = Console.ReadLine();
-            // Console.WriteLine(plateau.Test_Plateau(mot));
-
-            //  Console.WriteLine(dictionnaire.Mots[0]);
-            //
-            //  foreach (string popo in dictionnaire.Mots)
-            //  { Console.WriteLine(popo); }
-            //
-            //  Console.WriteLine(dictionnaire.Recherche("PERVERTI"));
-
-
-
-
-            //
-            //            Console.WriteLine("faces du de");
-            //            De de1 = new De();
-            //           for (int i = 0; i < 6; i++)
-            //           {
-            //                Console.Write(i+" " );
-            //                Console.WriteLine(de1.Lettres[i]);
-            //           }
-            //           
-            //           Console.WriteLine("premier lance");
-            //           Random randome = new Random();
-            //           de1.lance(randome);
-            //
-            //           Console.WriteLine(de1.Face);
-            //            Console.WriteLine("deuxieme  lance");
-            //            de1.lance(randome);
-            //           Console.WriteLine(de1.Face);
-            //         
+            // Fin du programme
+            Console.WriteLine("\nMerci d'avoir joué à Boggle !");
+            Console.WriteLine("Appuyez sur une touche pour quitter.");
+            Console.ReadKey();
         }
     }
 }
