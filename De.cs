@@ -1,4 +1,5 @@
-﻿using System;
+using Boggle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace Projet_Boogle_Solal_JB
 {
     internal class De
     {
-
         Lettre[] lettres;                 // ensemble des 6 faces du dé composés d'une lettre de Classe Lettre 
         Lettre face;                      // face tournée vers le haut, indique la Lettre qui sera visible 
         List<Lettre> liste;
@@ -56,7 +56,6 @@ namespace Projet_Boogle_Solal_JB
         {
             int valeur = r.Next(6);
             face = lettres[valeur];
-            
         }
     }
 }
