@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_Boogle_Solal_JB
 {
-
-internal class Plateau
+    internal class Plateau
     {
         De[,] des;
         Lettre[,] faces;
@@ -38,25 +37,21 @@ internal class Plateau
             }
             this.faces = faces;
         }
-
         public De[,] Des
         {
             get { return des; }
             set { des = value; }
         }
-
         public Lettre[,] Faces
         {
             get { return faces; }
             set { faces = value; }
         }
-
         public List<Lettre> Liste
         {
             get { return Liste; }
             set { Liste = value; }
         }
-
         public int nbOccurences(Lettre lettre) // fonction renvoyant le nombre d'occurences d'une lettre dans le plateau (faces visibles)
         {
             int compteur = 0;
@@ -72,17 +67,20 @@ internal class Plateau
             }
             return compteur;
         }
-
         public bool estVoisin(Lettre a, Lettre b)
         {
-            if (b == null || nbOccurences(b) == 0) Console.WriteLine(false); return false;
+            if (b == null || nbOccurences(b) == 0)
+            {
+                Console.WriteLine(false); 
+                return false;
+            }
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
                     if (faces[i, j] != null && faces[i, j].Caractere == a.Caractere)
                     {
-                        Console.WriteLine("a: "+i+" "+j);
+                        Console.WriteLine("a: " + i + " " + j);
                         for (int x = -1; x <= 1; x++)
                         {
                             for (int y = -1; y <= 1; y++)
@@ -95,7 +93,7 @@ internal class Plateau
                                     {
                                         if (faces[voisinX, voisinY] != null && faces[voisinX, voisinY].Caractere == b.Caractere)
                                         {
-                                            Console.WriteLine (true);    
+                                            Console.WriteLine(true);
                                             return true;
                                         }
                                     }
@@ -108,7 +106,6 @@ internal class Plateau
             Console.WriteLine(false);
             return false;
         }
-
         public bool Test_Plateau(string mot) // lance la fonction récursive ChercheMot en partant de chaque occurence de la première lettre
         {
             bool retour = false;
@@ -116,7 +113,7 @@ internal class Plateau
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (faces[i, j].Caractere == mot[0])
+                    if ( mot!=null && mot!="" && faces[i, j].Caractere == mot[0])
                     {
                         int[] tab = { i, j };
                         if (ChercheMot2(mot, 1, faces[i, j], tab))
@@ -128,12 +125,9 @@ internal class Plateau
             }
             return retour;
         }
-
-
         public bool ChercheMot2(string mot, int index, Lettre lettreActuelle, int[] coord)
         {
             if (index == mot.Length) return true;
-
             // Check all the 8 surrounding neighbors of the current cell
             for (int i = coord[0] - 1; i <= coord[0] + 1; i++)
             {
@@ -143,16 +137,13 @@ internal class Plateau
                     if (i >= 0 && i < 4 && j >= 0 && j < 4 && (i != coord[0] || j != coord[1]))
                     {
                         Lettre voisin = faces[i, j];
-
                         // Ensure the neighbor has the correct character and is not null
                         if (voisin != null && voisin.Caractere == mot[index])
                         {
                             // Store the current state before modifying it
                             Lettre temp = faces[coord[0], coord[1]];
                             faces[coord[0], coord[1]] = null;  // Mark the current cell as visited
-
                             int[] newCoord = { i, j };
-
                             // Recursively search for the next letter
                             if (ChercheMot2(mot, index + 1, voisin, newCoord))
                             {
@@ -160,7 +151,6 @@ internal class Plateau
                                 faces[coord[0], coord[1]] = temp;
                                 return true;
                             }
-
                             // Restore the grid state if the search fails
                             faces[coord[0], coord[1]] = temp;
                         }
@@ -169,35 +159,28 @@ internal class Plateau
             }
             return false;
         }
-
-
-
-
         public bool ChercheMot(string mot, int index, Lettre lettreActuelle, int[] coord)
         {
             if (index == mot.Length) return true;
             for (int i = 0; i < 4; i++)
-            { 
+            {
                 for (int j = 0; j < 4; j++)
                 {
                     Console.WriteLine("Lettre: " + lettreActuelle.Caractere);
                     Lettre voisin = faces[i, j];
                     Console.WriteLine("Lettre voisin:" + voisin.Caractere);
-                    Console.WriteLine( i +" "+ j);
-                    if (voisin.Caractere == mot[index]&& voisin != null)
+                    Console.WriteLine(i + " " + j);
+                    if (voisin.Caractere == mot[index] && voisin != null)
                     {
-                        Console.WriteLine("Lettre: "+lettreActuelle.Caractere);
-                        Console.WriteLine("Lettre voisin:"+voisin.Caractere);
-                        
+                        Console.WriteLine("Lettre: " + lettreActuelle.Caractere);
+                        Console.WriteLine("Lettre voisin:" + voisin.Caractere);
                         Console.WriteLine("coord Lettre" + coord[0] + coord[1]);
-
-                        if ( estVoisin(lettreActuelle, voisin))
+                        if (estVoisin(lettreActuelle, voisin))
                         {
 
                             faces[coord[0], coord[1]] = null;
                             int[] tab = { i, j };
-
-                            if (ChercheMot(mot, index + 1, voisin, tab ))
+                            if (ChercheMot(mot, index + 1, voisin, tab))
                             {
                                 faces[i, j] = voisin;
                                 return true;
@@ -209,7 +192,6 @@ internal class Plateau
             }
             return false;
         }
-
         public string toString() // affiche le plateau sous forme de tableau 4x4
         {
             string retour = "";
@@ -223,7 +205,6 @@ internal class Plateau
             }
             return retour;
         }
-
         public void Lance() // change les faces hautes des dés
         {
             for (int i = 0; i < 4; i++)
@@ -237,8 +218,4 @@ internal class Plateau
             }
         }
     }
-
-
-
 }
-
