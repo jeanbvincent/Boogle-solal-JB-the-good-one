@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,41 +10,27 @@ namespace Projet_Boogle_Solal_JB
     {
         private List<string> mots;
         private string langue;
-
         public Dictionnaire(string langue)
         {
             string filePath = ""; // contient le chemin jusqu'au document MotsPossibles
             if (langue == "FR")
             {
-                filePath = "C:\\Users\\jeanb\\Downloads\\MotsPossiblesFR.txt";
+                filePath = "C:\\Users\\solal\\Downloads\\MotsPossiblesFR.txt";
             }
             else if (langue != "FR")
             {
-                filePath = "C:\\Users\\jeanb\\Downloads\\MotsPossiblesFR.txt";
+                filePath = "C:\\Users\\solal\\Downloads\\MotsPossiblesEN.txt";
             }
             string contenu = File.ReadAllText(filePath); // on lit le texte du document
             char[] delimiteurs = { ' ', '\n', '\r', '\t' }; // caractères séparant les mots (sauts de ligne, tabulations...)
             mots = new List<string>(contenu.Split(delimiteurs, StringSplitOptions.RemoveEmptyEntries)); // on sépare les mots (str -> liste de mots)
             mots.Sort(); // on trie la liste de mots par ordre alphabétique (comme ça c'est fait)
         }
-
         public List<string> Mots
         {
-            get { return mots; } 
-            
+            get { return mots; }
+
         }
-
-        // public string toString()
-        // { 
-        //
-        // for (int i = 0; i < mots.Count; i++)
-        //     {
-        //
-        //     }
-        // }
-
-        //  public bool RechDichoRecursif(string mot, )
-
         public string toString() // décrit le dictionnaire (langue et mots par longueur/lettre)
         {
             int longueurMax = 0; // on cherche la taille maximale d'un mot dans le dictionnaire
@@ -91,14 +77,14 @@ namespace Projet_Boogle_Solal_JB
         {
             bool rps = false;
             for (int i = 0; i < mots.Count; i++)
-            { 
-            
+            {
+
 
                 if (mots[i] == mot)
                 {
                     rps = true;
                 }
-            
+
             }
             return rps;
         }
@@ -122,8 +108,5 @@ namespace Projet_Boogle_Solal_JB
                 return RechDichoRecursif(mot, milieu + 1, fin);
             }
         }
-
-
-
     }
 }
