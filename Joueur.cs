@@ -13,7 +13,6 @@ namespace Projet_Boogle_Solal_JB
         int score;
         List<string> motsTrouves;
         List<Lettre> lettres;
-
         public Joueur(string nom, List<Lettre> lettres)
         {
             this.nom = nom;
@@ -21,25 +20,21 @@ namespace Projet_Boogle_Solal_JB
             this.motsTrouves = new List<string>();
             this.lettres = lettres;
         }
-
         public string Nom
         {
             get { return nom; }
             set { nom = value; }
         }
-
         public int Score
         {
             get { return score; }
             set { score = value; }
         }
-
         public List<string> MotsTrouves
         {
             get { return motsTrouves; }
             set { motsTrouves = value; }
         }
-
         public bool Contain(string mot)
         {
             bool rps = false;
@@ -53,48 +48,56 @@ namespace Projet_Boogle_Solal_JB
             }
             return rps;
         }
-
-        public void Add_Mot(string mot)
+        public bool Add_Mot(string mot)
         {
-            // Vérifie si le mot est déjà dans la liste
-            if (Contain(mot))
+            if (motsTrouves.Contains(mot))
             {
-                Console.WriteLine($"Erreur : Le mot \"{mot}\" a déjà été trouvé par {nom}.");
-                return; // Arrête l'exécution si le mot est déjà trouvé
+                Console.WriteLine($"Vous avez déjà trouvé le mot {mot} !");
+                return false; // Le mot est déjà dans la liste
             }
-
-            // Ajoute le nouveau mot à la liste
-            motsTrouves.Add(mot);
-
-            int points = 0; // Compteur pour les points gagnés
-            mot = mot.ToUpper(); // Convertir le mot en majuscules pour la comparaison
+            motsTrouves.Add(mot); // On ajoute le mot à la liste
+            int points = 0; // Calcul des points
+            mot = mot.ToUpper();
             for (int i = 0; i < mot.Length; i++)
             {
-                for (int j = 0; j < lettres.Count; j++) // Chercher les points pour chaque lettre du mot
+                for (int j = 0; j < lettres.Count; j++)
                 {
                     if (mot[i] == lettres[j].Caractere)
                     {
-                        points += lettres[j].Points; // Ajoute les points correspondants
+                        points += lettres[j].Points;
                     }
                 }
             }
-
-            score += points; // Ajoute les points au score du joueur
+            score += points; // Ajout des points au score
+            Console.WriteLine($"+ {points}pts !");
+            return true; // Mot ajouté avec succès
         }
 
-
+        public int CalculerPointsMot(string mot)
+        {
+            int points = 0;
+            mot = mot.ToUpper();
+            for (int i = 0; i < mot.Length; i++)
+            {
+                for (int j = 0; j < lettres.Count; j++)
+                {
+                    if (mot[i] == lettres[j].Caractere)
+                    {
+                        points += lettres[j].Points;
+                    }
+                }
+            }
+            return points;
+        }
         public string toString()
         {
             string description = "";
-            description = description + nom + " à: " + score + " points et à trouvés les mots suivants:" + "\n";
-
+            description = $"{nom} a {score} points et a trouvé les mots suivants :\n";
             for (int i = 0; i < motsTrouves.Count; i++)
             {
-                description = description + motsTrouves[i] + "\n";
+                description = description + $"{motsTrouves[i]} (+{CalculerPointsMot(motsTrouves[i])}pts) \n";
             }
             return description;
         }
-
-
     }
 }
