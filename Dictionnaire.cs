@@ -15,11 +15,11 @@ namespace Projet_Boogle_Solal_JB
             string filePath = ""; // contient le chemin jusqu'au document MotsPossibles
             if (langue == "FR")
             {
-                filePath = "C:\\Users\\solal\\Downloads\\MotsPossiblesFR.txt";
+                filePath = "MotsPossiblesFR.txt";
             }
             else if (langue != "FR")
             {
-                filePath = "C:\\Users\\solal\\Downloads\\MotsPossiblesEN.txt";
+                filePath = "MotsPossiblesEN.txt";
             }
             string contenu = File.ReadAllText(filePath); // on lit le texte du document
             char[] delimiteurs = { ' ', '\n', '\r', '\t' }; // caractères séparant les mots (sauts de ligne, tabulations...)
