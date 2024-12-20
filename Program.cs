@@ -10,7 +10,7 @@ namespace Projet_Boogle_Solal_JB
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\Users\\solal\\Downloads\\Lettres.txt";
+            string filePath = "Lettres.txt";
             List<Lettre> lettres = new List<Lettre>(); //creation d'un liste avec les lettre utilises
             //on utilisera pas de try{} catch{} puisque on connait deja le fichier "lettres"
             foreach (string ligne in File.ReadLines(filePath))   // Lire chaque ligne du fichier
