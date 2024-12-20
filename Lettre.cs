@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_Boogle_Solal_JB
 {
-    internal class Lettre
+    internal class Lettre /// nous avons décider d'utiliser une classe lettre qui contient la lettre elle-même, son poids et son nombre d'utilisations
     {
         char caractere;
         int points;
@@ -31,9 +31,8 @@ namespace Projet_Boogle_Solal_JB
             this.caractere = caractere;
             this.points = points;
             this.occurence = occurence;
-
         }
-        public List<Lettre> Convert(string mot, List<Lettre> lettres)
+        public List<Lettre> Convert(string mot, List<Lettre> lettres) /// transforme un string (chaine de caractères) en liste de lettres
         {
             List<Lettre> motLettres = new List<Lettre>();
             for (int i = 0; i < mot.Length; i++)
