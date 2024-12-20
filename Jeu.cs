@@ -44,7 +44,7 @@ namespace Projet_Boogle_Solal_JB
         }
 
         /// méthode pour charger les lettres depuis un fichier texte
-        private List<Lettre> ChargerLettres(string filePath)
+        public List<Lettre> ChargerLettres(string filePath)
         {
             List<Lettre> lettres = new List<Lettre>();
             foreach (string ligne in File.ReadLines(filePath))
@@ -63,7 +63,7 @@ namespace Projet_Boogle_Solal_JB
         }
 
         /// méthode pour initialiser une partie (joueurs, dictionnaire, plateau)
-        private void InitialiserPartie()
+        public void InitialiserPartie()
         {
             string langue = "";
             while (langue != "FR" && langue != "EN") /// relance en boucle tant que l'utilisateur ne saisit pas de valeur correcte
@@ -80,7 +80,7 @@ namespace Projet_Boogle_Solal_JB
         }
 
         /// méthode pour jouer un tour pour un joueur donné
-        private void JouerTour(Joueur joueur)
+        public void JouerTour(Joueur joueur)
         {
             Console.WriteLine($"\n--- Tour de {joueur.Nom} ---\n");
             Console.WriteLine(plateau.toString());
@@ -109,7 +109,7 @@ namespace Projet_Boogle_Solal_JB
         }
 
         /// méthode pour afficher les résultats finaux
-        private void AfficherResultats()
+        public void AfficherResultats()
         {
             Console.WriteLine("\n--- Résultats finaux ---\n");
             Console.WriteLine(joueur1.toString()); /// on utilise toString pour afficher les scores des joueurs
@@ -129,7 +129,7 @@ namespace Projet_Boogle_Solal_JB
         }
 
         /// méthode pour générer un nuage de mots
-        private void GenererNuageDeMots()
+        public void GenererNuageDeMots()
         {
             List<string> listeMotsNuage = joueur1.MotsTrouves.Concat(joueur2.MotsTrouves).Distinct().ToList();
             List<int> listeFrequencesNuage = new List<int>(new int[listeMotsNuage.Count]); /// tous les mots ont une fréquence égale à 1
@@ -145,7 +145,7 @@ namespace Projet_Boogle_Solal_JB
         }
 
         /// méthode pour demander si les joueurs veulent rejouer
-        private bool DemanderRejouer()
+        public bool DemanderRejouer()
         {
             string rejouer;
             do
